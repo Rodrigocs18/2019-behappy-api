@@ -1,6 +1,6 @@
-import knex from "../config/knex";
+import knex from "../../config/knex";
 
-const tasks_route = {
+export default {
   method: "GET",
   path: "/tasks",
   handler: (request, reply) =>
@@ -8,7 +8,5 @@ const tasks_route = {
       .from("tasks")
       .select("oid", "title", "description")
       .then(results => reply.response(results))
-      .catch(err => console.log(err))
+      .catch(err => reply.response(err))
 };
-
-export default tasks_route;
