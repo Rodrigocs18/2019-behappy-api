@@ -1,4 +1,3 @@
-
 const table_name = "who";
 
 exports.up = function(knex, Promise) {
