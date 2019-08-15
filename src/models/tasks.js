@@ -7,14 +7,14 @@ class Task {
   static getAll() {
     return knex
       .from(table_name)
-      .select("oid", "title", "description")
+      .select()
       .then(results => Task.deserialize(results))
       .catch(err => err);
   }
 
   static getById(id) {
     return knex(table_name)
-      .where("oid", id)
+      .where("id", id)
       .select()
       .then(results => Task.deserialize(results))
       .catch(err => err);
@@ -22,7 +22,7 @@ class Task {
 
   static undone(id) {
     return knex(table_name)
-      .where("oid", id)
+      .where("id", id)
       .andWhere("done", true)
       .update("done", false)
       .then(tasks_updated => {
@@ -33,7 +33,7 @@ class Task {
 
   static done(id) {
     return knex(table_name)
-      .where("oid", id)
+      .where("id", id)
       .andWhere("done", false)
       .update("done", true)
       .then(tasks_updated => {
@@ -45,9 +45,9 @@ class Task {
   static deserialize(json) {
     return json.map(data => {
       let task = new Task();
-      task.oid = data.oid ? data.oid : 0;
+      task.id = data.id ? data.id : 0;
       task.title = data.title ? data.title : "";
-      task.done = data.done ? data.done : false;
+      task.done = data.done ? true : false;
       task.delete = data.delete ? data.delete : false;
       return task;
     });
