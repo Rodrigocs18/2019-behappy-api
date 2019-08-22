@@ -1,5 +1,4 @@
 import knex from "../config/knex";
-import { EILSEQ } from "constants";
 
 const table_name = "tasks";
 
@@ -47,8 +46,9 @@ class Task {
       let task = new Task();
       task.oid = data.oid ? data.oid : 0;
       task.title = data.title ? data.title : "";
-      task.done = data.done ? data.done : false;
-      task.delete = data.delete ? data.delete : false;
+      task.description = data.description ? data.description : "";
+      task.done = data.done ? true : false;
+      task.delete = data.delete ? true : false;
       return task;
     });
   }
