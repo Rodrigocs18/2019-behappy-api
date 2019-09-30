@@ -17,8 +17,8 @@ const response_message_builder = (result, task_id) => {
     },
     links: [
       {
-        rel: `/linkrels/tasks/${task_id}/undelete`,
-        uri: `/tasks/${task_id}/undelete`
+        rel: `/linkrels/tasks/${task_id}/delete`,
+        uri: `/tasks/${task_id}/delete`
       }
     ]
   };
@@ -27,13 +27,13 @@ const response_message_builder = (result, task_id) => {
 const delete_response_code = result => (result == 1 ? 200 : 400);
 
 export default {
-  method: "DELETE",
-  path: "/tasks/{task_id}",
+  method: "POST",
+  path: "/tasks/{task_id}/undelete",
   options: {
     auth: "token"
   },
   handler: (request, reply) =>
-    Task.delete(request.params.task_id).then(tasks =>
+    Task.undelete(request.params.task_id).then(tasks =>
       reply
         .response(response_message_builder(tasks, request.params.task_id))
         .code(delete_response_code(tasks))
